@@ -1,0 +1,8 @@
+# system
+.DS_Store
+.idea/
+
+# python
+*.py[cod]
+*.so
+*.out
