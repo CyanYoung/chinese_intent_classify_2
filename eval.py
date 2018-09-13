@@ -34,7 +34,7 @@ models = {'dnn': load_model(map_path('dnn', paths)),
           'rnn': load_model(map_path('rnn', paths))}
 
 
-def test(sents, labels, name):
+def test(name, sents, labels):
     model = map_model(name, models)
     probs = model.predict(sents)
     preds = np.argmax(probs, axis=1)
@@ -45,6 +45,6 @@ def test(sents, labels, name):
 
 
 if __name__ == '__main__':
-    test(sents, labels, 'dnn')
-    test(sents, labels, 'cnn')
-    test(sents, labels, 'rnn')
+    test('dnn', sents, labels)
+    test('cnn', sents, labels)
+    test('rnn', sents, labels)

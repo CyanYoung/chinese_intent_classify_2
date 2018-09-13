@@ -54,10 +54,10 @@ def predict(text, name):
     probs = model.predict(pad_seq)[0]
     sort_probs = sorted(probs, reverse=True)
     sort_inds = np.argsort(-probs)
-    sort_labels = [ind_labels[ind] for ind in sort_inds]
+    sort_preds = [ind_labels[ind] for ind in sort_inds]
     formats = list()
-    for label, prob in zip(sort_labels, sort_probs):
-        formats.append('{} {:.3f}'.format(label, prob))
+    for pred, prob in zip(sort_preds, sort_probs):
+        formats.append('{} {:.3f}'.format(pred, prob))
     return ', '.join(formats)
 
 
