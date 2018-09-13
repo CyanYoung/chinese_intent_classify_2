@@ -64,6 +64,6 @@ def predict(text, name):
 if __name__ == '__main__':
     while True:
         text = input('text: ')
-        print('dnn:', predict(text, 'dnn'))
-        print('cnn:', predict(text, 'cnn'))
-        print('rnn:', predict(text, 'rnn'))
+        print('dnn: %s' % predict(text, 'dnn'))
+        print('cnn: %s' % predict(text, 'cnn'))
+        print('rnn: %s' % predict(text, 'rnn'))
