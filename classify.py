@@ -17,12 +17,13 @@ path_stop_word = 'dict/stop_word.txt'
 path_type_dir = 'dict/word_type'
 path_homo = 'dict/homonym.csv'
 path_syno = 'dict/synonym.csv'
-path_word2ind = 'model/word2ind.pkl'
-path_label_ind = 'feat/label_ind.pkl'
 stop_word_re = load_word_re(path_stop_word)
 word_type_re = load_type_re(path_type_dir)
 homo_dict = load_word_pair(path_homo)
 syno_dict = load_word_pair(path_syno)
+
+path_word2ind = 'model/word2ind.pkl'
+path_label_ind = 'feat/label_ind.pkl'
 with open(path_word2ind, 'rb') as f:
     word2ind = pk.load(f)
 with open(path_label_ind, 'rb') as f:
@@ -51,13 +52,18 @@ def predict(text, name):
     pad_seq = pad_sequences([seq], maxlen=seq_len)
     model = map_model(name, models)
     probs = model.predict(pad_seq)[0]
-    max_ind = np.argmax(probs)
-    return ind_labels[max_ind]
+    sort_probs = sorted(probs, reverse=True)
+    sort_inds = np.argsort(-probs)
+    sort_labels = [ind_labels[ind] for ind in sort_inds]
+    formats = list()
+    for label, prob in zip(sort_labels, sort_probs):
+        formats.append('{} {:.3f}'.format(label, prob))
+    return ', '.join(formats)
 
 
 if __name__ == '__main__':
     while True:
         text = input('text: ')
-        print('dnn: %s' % predict(text, 'dnn'))
-        print('cnn: %s' % predict(text, 'cnn'))
-        print('rnn: %s' % predict(text, 'rnn'))
+        print('dnn:', predict(text, 'dnn'))
+        print('cnn:', predict(text, 'cnn'))
+        print('rnn:', predict(text, 'rnn'))
