@@ -39,7 +39,7 @@ def embed(sents, path_word2ind, path_word_vec, path_embed):
 
 
 def label2ind(labels, path_label_ind):
-    labels = list(set(labels))
+    labels = sorted(list(set(labels)))
     label_inds = dict()
     for i in range(len(labels)):
         label_inds[labels[i]] = i
