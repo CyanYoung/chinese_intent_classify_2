@@ -1,4 +1,4 @@
-## Chinese Response Classify 2018-9
+## Chinese Intent Classify 2018-9
 
 #### 1.preprocess
 
