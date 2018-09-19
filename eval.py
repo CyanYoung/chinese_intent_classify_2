@@ -6,7 +6,7 @@ from keras.models import load_model
 
 from sklearn.metrics import accuracy_score
 
-from util import flat_read, map_path, map_model
+from util import flat_read, map_item
 
 
 path_test = 'data/test.csv'
@@ -29,13 +29,13 @@ paths = {'dnn': 'model/dnn.h5',
          'cnn': 'model/cnn.h5',
          'rnn': 'model/rnn.h5'}
 
-models = {'dnn': load_model(map_path('dnn', paths)),
-          'cnn': load_model(map_path('cnn', paths)),
-          'rnn': load_model(map_path('rnn', paths))}
+models = {'dnn': load_model(map_item('dnn', paths)),
+          'cnn': load_model(map_item('cnn', paths)),
+          'rnn': load_model(map_item('rnn', paths))}
 
 
 def test(name, sents, labels):
-    model = map_model(name, models)
+    model = map_item(name, models)
     probs = model.predict(sents)
     preds = np.argmax(probs, axis=1)
     print('\n%s %s %.2f\n' % (name, 'acc:', accuracy_score(labels, preds)))

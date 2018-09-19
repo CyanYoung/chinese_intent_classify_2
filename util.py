@@ -49,22 +49,8 @@ def flat_read(path, field):
     return items
 
 
-def map_path(name, paths):
-    if name in paths:
-        return paths[name]
-    else:
-        raise KeyError
-
-
-def map_func(name, funcs):
-    if name in funcs:
-        return funcs[name]
-    else:
-        raise KeyError
-
-
-def map_model(name, models):
-    if name in models:
-        return models[name]
+def map_item(name, items):
+    if name in items:
+        return items[name]
     else:
         raise KeyError
