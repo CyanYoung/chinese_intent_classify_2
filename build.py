@@ -64,5 +64,5 @@ def fit(name, epoch, embed_mat, label_inds, sents, labels):
 
 if __name__ == '__main__':
     fit('dnn', 10, embed_mat, label_inds, sents, labels)
-    fit('cnn', 20, embed_mat, label_inds, sents, labels)
+    fit('cnn', 10, embed_mat, label_inds, sents, labels)
     fit('rnn', 10, embed_mat, label_inds, sents, labels)
