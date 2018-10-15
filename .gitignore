@@ -1,8 +1,9 @@
 # system
 .DS_Store
-.idea/
+.idea
 
 # python
 *.py[cod]
 *.so
 *.out
+__pycache__
