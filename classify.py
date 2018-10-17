@@ -7,7 +7,7 @@ import numpy as np
 from keras.models import load_model
 from keras.preprocessing.sequence import pad_sequences
 
-from util import load_word_re, load_type_re, load_word_pair, word_replace, map_item
+from util import load_word_re, load_type_re, load_pair, word_replace, map_item
 
 
 seq_len = 30
@@ -18,8 +18,8 @@ path_homo = 'dict/homonym.csv'
 path_syno = 'dict/synonym.csv'
 stop_word_re = load_word_re(path_stop_word)
 word_type_re = load_type_re(path_type_dir)
-homo_dict = load_word_pair(path_homo)
-syno_dict = load_word_pair(path_syno)
+homo_dict = load_pair(path_homo)
+syno_dict = load_pair(path_syno)
 
 path_word2ind = 'model/word2ind.pkl'
 path_label_ind = 'feat/label_ind.pkl'
