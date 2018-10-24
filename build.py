@@ -6,7 +6,7 @@ from keras.optimizers import Adam
 from keras.callbacks import ModelCheckpoint
 from keras.utils import plot_model
 
-from nn_arch import dnn, cnn, rnn
+from nn_arch import adnn, crnn, rcnn
 
 from util import map_item
 
@@ -26,22 +26,24 @@ with open(path_label, 'rb') as f:
 with open(path_label_ind, 'rb') as f:
     label_inds = pk.load(f)
 
-funcs = {'dnn': dnn,
-         'cnn': cnn,
-         'rnn': rnn}
+funcs = {'adnn': adnn,
+         'crnn': crnn,
+         'rcnn': rcnn}
 
-paths = {'dnn': 'model/dnn.h5',
-         'cnn': 'model/cnn.h5',
-         'rnn': 'model/rnn.h5',
-         'dnn_plot': 'model/plot/dnn.png',
-         'cnn_plot': 'model/plot/cnn.png',
-         'rnn_plot': 'model/plot/rnn.png'}
+paths = {'adnn': 'model/adnn.h5',
+         'crnn': 'model/crnn.h5',
+         'rcnn': 'model/rcnn.h5',
+         'adnn_plot': 'model/plot/dnn.png',
+         'crnn_plot': 'model/plot/cnn.png',
+         'rcnn_plot': 'model/plot/rnn.png'}
 
 
 def compile(name, embed_mat, seq_len, class_num):
     vocab_num, embed_len = embed_mat.shape
     embed = Embedding(input_dim=vocab_num, output_dim=embed_len,
-                      weights=[embed_mat], input_length=seq_len, trainable=True)
+                       weights=[embed_mat], input_length=seq_len, trainable=True)
+    # embed = Embedding(input_dim=vocab_num, output_dim=embed_len,
+    #                   weights=[embed_mat], input_length=seq_len, trainable=False)
     input = Input(shape=(seq_len,))
     embed_input = embed(input)
     func = map_item(name, funcs)
@@ -63,6 +65,6 @@ def fit(name, epoch, embed_mat, label_inds, sents, labels):
 
 
 if __name__ == '__main__':
-    fit('dnn', 10, embed_mat, label_inds, sents, labels)
-    fit('cnn', 10, embed_mat, label_inds, sents, labels)
-    fit('rnn', 10, embed_mat, label_inds, sents, labels)
+    fit('adnn', 10, embed_mat, label_inds, sents, labels)
+    fit('crnn', 10, embed_mat, label_inds, sents, labels)
+    fit('rcnn', 10, embed_mat, label_inds, sents, labels)

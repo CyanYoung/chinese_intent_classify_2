@@ -1,4 +1,4 @@
-## Chinese Intent Classify 2018-9
+## Chinese Intent Classify 2018-10
 
 #### 1.preprocess
 

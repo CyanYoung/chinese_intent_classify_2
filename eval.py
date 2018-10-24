@@ -25,13 +25,13 @@ ind_labels = dict()
 for label, ind in label_inds.items():
     ind_labels[ind] = label
 
-paths = {'dnn': 'model/dnn.h5',
-         'cnn': 'model/cnn.h5',
-         'rnn': 'model/rnn.h5'}
+paths = {'adnn': 'model/adnn.h5',
+         'crnn': 'model/crnn.h5',
+         'rcnn': 'model/rcnn.h5'}
 
-models = {'dnn': load_model(map_item('dnn', paths)),
-          'cnn': load_model(map_item('cnn', paths)),
-          'rnn': load_model(map_item('rnn', paths))}
+models = {'adnn': load_model(map_item('adnn', paths)),
+          'crnn': load_model(map_item('crnn', paths)),
+          'rcnn': load_model(map_item('rcnn', paths))}
 
 
 def test(name, sents, labels):
@@ -45,6 +45,6 @@ def test(name, sents, labels):
 
 
 if __name__ == '__main__':
-    test('dnn', sents, labels)
-    test('cnn', sents, labels)
-    test('rnn', sents, labels)
+    test('adnn', sents, labels)
+    test('crnn', sents, labels)
+    test('rcnn', sents, labels)
