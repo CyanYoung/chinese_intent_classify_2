@@ -79,7 +79,7 @@ def plot_prob(items, probs):
     plt.show()
 
 
-def predict(text, name, plot):
+def predict(text, name):
     text = re.sub(stop_word_re, '', text.strip())
     for word_type, word_re in word_type_re.items():
         text = re.sub(word_re, word_type, text)
@@ -95,7 +95,7 @@ def predict(text, name, plot):
     formats = list()
     for pred, prob in zip(sort_preds, sort_probs):
         formats.append('{} {:.3f}'.format(pred, prob))
-    if name == 'adnn' and plot:
+    if name == 'adnn':
         model = map_item(name + '_plot', models)
         probs = model.predict(pad_seq)[0]
         plot_prob(text, probs[-len(text):])
@@ -105,6 +105,6 @@ def predict(text, name, plot):
 if __name__ == '__main__':
     while True:
         text = input('text: ')
-        print('adnn: %s' % predict(text, 'adnn', plot=True))
-        print('crnn: %s' % predict(text, 'crnn', plot=False))
-        print('rcnn: %s' % predict(text, 'rcnn', plot=False))
+        print('adnn: %s' % predict(text, 'adnn'))
+        print('crnn: %s' % predict(text, 'crnn'))
+        print('rcnn: %s' % predict(text, 'rcnn'))
