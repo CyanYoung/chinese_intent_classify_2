@@ -24,17 +24,6 @@ def attend(x, embed_len):
     return mean(x)
 
 
-def attend_plot(x):
-    da = Dense(200, activation='tanh', name='attend1')
-    dn = Dense(1, activation=None, name='attend2')
-    tn = TimeDistributed(dn)
-    softmax = Activation('softmax')
-    p = da(x)
-    p = tn(p)
-    p = Flatten()(p)
-    return softmax(p)
-
-
 def adnn(embed_input, class_num):
     da1 = Dense(200, activation='relu', name='encode1')
     da2 = Dense(200, activation='relu', name='encode2')
@@ -44,6 +33,17 @@ def adnn(embed_input, class_num):
     x = da2(x)
     x = Dropout(0.5)(x)
     return da3(x)
+
+
+def adnn_plot(x):
+    da = Dense(200, activation='tanh', name='attend1')
+    dn = Dense(1, activation=None, name='attend2')
+    tn = TimeDistributed(dn)
+    softmax = Activation('softmax')
+    p = da(x)
+    p = tn(p)
+    p = Flatten()(p)
+    return softmax(p)
 
 
 def crnn(embed_input, class_num):
