@@ -41,9 +41,7 @@ paths = {'adnn': 'model/adnn.h5',
 def compile(name, embed_mat, seq_len, class_num):
     vocab_num, embed_len = embed_mat.shape
     embed = Embedding(input_dim=vocab_num, output_dim=embed_len,
-                       weights=[embed_mat], input_length=seq_len, trainable=True)
-    # embed = Embedding(input_dim=vocab_num, output_dim=embed_len,
-    #                   weights=[embed_mat], input_length=seq_len, trainable=False)
+                      weights=[embed_mat], input_length=seq_len, trainable=True)
     input = Input(shape=(seq_len,))
     embed_input = embed(input)
     func = map_item(name, funcs)

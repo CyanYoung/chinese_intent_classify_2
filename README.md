@@ -2,13 +2,13 @@
 
 #### 1.preprocess
 
-prepare() 将按类文件保存的数据汇总、去重
+prepare() 将按类文件保存的数据汇总、去重，去除停用词，统一替换地区、时间
 
-去除停用词，统一替换地区、时间等特殊词，打乱后划分为训练、测试数据
+等特殊词，word_replace() 替换同音、同义词，打乱后划分为训练、测试数据
 
 #### 2.explore
 
-统计词汇、长度、类别的频率，条形图可视化，计算句词丰富度指标
+统计词汇、长度、类别的频率，条形图可视化，计算 sent / word_per_sent 指标
 
 #### 3.represent
 
@@ -20,7 +20,7 @@ align() 将序列填充为相同长度，训练标签使用 to_categorical() 编
 
 #### 4.build
 
-train 80% / dev 20% 划分，通过 dnn、cnn、rnn 构建分类模型
+train 80% / dev 20% 划分，通过 adnn、crnn、rcnn 构建分类模型
 
 #### 5.classify
 
