@@ -35,6 +35,13 @@ def load_adnn_plot(name, embed_mat, seq_len):
     return model
 
 
+def ind2label(label_inds):
+    ind_labels = dict()
+    for word, ind in label_inds.items():
+        ind_labels[ind] = word
+    return ind_labels
+
+
 seq_len = 30
 
 path_stop_word = 'dict/stop_word.txt'
@@ -56,9 +63,7 @@ with open(path_embed, 'rb') as f:
 with open(path_label_ind, 'rb') as f:
     label_inds = pk.load(f)
 
-ind_labels = dict()
-for label, ind in label_inds.items():
-    ind_labels[ind] = label
+ind_labels = ind2label(label_inds)
 
 paths = {'adnn': 'model/adnn.h5',
          'crnn': 'model/crnn.h5',

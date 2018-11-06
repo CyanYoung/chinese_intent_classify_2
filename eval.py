@@ -6,6 +6,8 @@ from keras.models import load_model
 
 from sklearn.metrics import accuracy_score
 
+from classify import ind2label
+
 from util import flat_read, map_item
 
 
@@ -21,9 +23,7 @@ with open(path_label, 'rb') as f:
 with open(path_label_ind, 'rb') as f:
     label_inds = pk.load(f)
 
-ind_labels = dict()
-for label, ind in label_inds.items():
-    ind_labels[ind] = label
+ind_labels = ind2label(label_inds)
 
 paths = {'adnn': 'model/adnn.h5',
          'crnn': 'model/crnn.h5',
