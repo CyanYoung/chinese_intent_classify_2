@@ -14,17 +14,17 @@ from util import map_item
 batch_size = 32
 
 path_embed = 'feat/embed.pkl'
+path_label_ind = 'feat/label_ind.pkl'
 path_sent = 'feat/sent_train.pkl'
 path_label = 'feat/label_train.pkl'
-path_label_ind = 'feat/label_ind.pkl'
 with open(path_embed, 'rb') as f:
     embed_mat = pk.load(f)
+with open(path_label_ind, 'rb') as f:
+    label_inds = pk.load(f)
 with open(path_sent, 'rb') as f:
     sents = pk.load(f)
 with open(path_label, 'rb') as f:
     labels = pk.load(f)
-with open(path_label_ind, 'rb') as f:
-    label_inds = pk.load(f)
 
 funcs = {'adnn': adnn,
          'crnn': crnn,
