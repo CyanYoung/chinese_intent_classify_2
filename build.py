@@ -26,6 +26,8 @@ with open(path_sent, 'rb') as f:
 with open(path_label, 'rb') as f:
     labels = pk.load(f)
 
+class_num = len(label_inds)
+
 funcs = {'adnn': adnn,
          'crnn': crnn,
          'rcnn': rcnn}
@@ -53,9 +55,8 @@ def compile(name, embed_mat, seq_len, class_num):
     return model
 
 
-def fit(name, epoch, embed_mat, label_inds, sents, labels):
+def fit(name, epoch, embed_mat, class_num, sents, labels):
     seq_len = len(sents[0])
-    class_num = len(label_inds)
     model = compile(name, embed_mat, seq_len, class_num)
     check_point = ModelCheckpoint(map_item(name, paths), monitor='val_loss', verbose=True, save_best_only=True)
     model.fit(sents, labels, batch_size=batch_size, epochs=epoch,
@@ -63,6 +64,6 @@ def fit(name, epoch, embed_mat, label_inds, sents, labels):
 
 
 if __name__ == '__main__':
-    fit('adnn', 10, embed_mat, label_inds, sents, labels)
-    fit('crnn', 10, embed_mat, label_inds, sents, labels)
-    fit('rcnn', 10, embed_mat, label_inds, sents, labels)
+    fit('adnn', 10, embed_mat, class_num, sents, labels)
+    fit('crnn', 10, embed_mat, class_num, sents, labels)
+    fit('rcnn', 10, embed_mat, class_num, sents, labels)
