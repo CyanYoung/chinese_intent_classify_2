@@ -28,7 +28,7 @@ def embed(sents, path_word2ind, path_word_vec, path_embed):
     with open(path_word_vec, 'rb') as f:
         word_vecs = pk.load(f)
     vocab = word_vecs.vocab
-    vocab_num = min(max_vocab, len(word_inds) + 1)
+    vocab_num = min(max_vocab + 1, len(word_inds) + 1)
     embed_mat = np.zeros((vocab_num, embed_len))
     for word, ind in word_inds.items():
         if word in vocab:
