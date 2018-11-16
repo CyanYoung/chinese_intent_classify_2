@@ -13,7 +13,7 @@ def attend(x, embed_len):
     dn = Dense(1, activation=None, name='attend2')
     tn = TimeDistributed(dn)
     softmax = Activation('softmax')
-    mean = Lambda(lambda a: K.mean(a, axis=1))
+    sum = Lambda(lambda a: K.sum(a, axis=1))
     p = da(x)
     p = tn(p)
     p = Flatten()(p)
@@ -21,7 +21,7 @@ def attend(x, embed_len):
     p = RepeatVector(embed_len)(p)
     p = Permute((2, 1))(p)
     x = Multiply()([x, p])
-    return mean(x)
+    return sum(x)
 
 
 def adnn(embed_input, class_num):
