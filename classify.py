@@ -20,7 +20,7 @@ plt.rcParams['axes.unicode_minus'] = False
 plt.rcParams['font.family'] = ['Arial Unicode MS']
 
 
-def define_adnn_plot(embed_mat, seq_len):
+def define_plot(embed_mat, seq_len):
     vocab_num, embed_len = embed_mat.shape
     embed = Embedding(input_dim=vocab_num, output_dim=embed_len, input_length=seq_len, name='embed')
     input = Input(shape=(seq_len,))
@@ -29,8 +29,8 @@ def define_adnn_plot(embed_mat, seq_len):
     return Model(input, output)
 
 
-def load_adnn_plot(name, embed_mat, seq_len):
-    model = define_adnn_plot(embed_mat, seq_len)
+def load_plot(name, embed_mat, seq_len):
+    model = define_plot(embed_mat, seq_len)
     model.load_weights(map_item(name, paths), by_name=True)
     return model
 
@@ -70,17 +70,17 @@ paths = {'adnn': 'model/adnn.h5',
          'rcnn': 'model/rcnn.h5'}
 
 models = {'adnn': load_model(map_item('adnn', paths)),
-          'adnn_plot': load_adnn_plot('adnn', embed_mat, seq_len),
+          'adnn_plot': load_plot('adnn', embed_mat, seq_len),
           'crnn': load_model(map_item('crnn', paths)),
           'rcnn': load_model(map_item('rcnn', paths))}
 
 
-def plot_prob(items, probs):
-    inds = np.arange(len(items))
-    plt.bar(inds, probs, width=0.5)
+def plot_att(text, atts):
+    inds = np.arange(len(text))
+    plt.bar(inds, atts, width=0.5)
     plt.xlabel('word')
     plt.ylabel('prob')
-    plt.xticks(inds, items)
+    plt.xticks(inds, text)
     plt.show()
 
 
@@ -101,9 +101,9 @@ def predict(text, name):
     for pred, prob in zip(sort_preds, sort_probs):
         formats.append('{} {:.3f}'.format(pred, prob))
     if name == 'adnn':
-        model = map_item(name + '_plot', models)
-        probs = model.predict(pad_seq)[0]
-        plot_prob(text, probs[-len(text):])
+        plot = map_item(name + '_plot', models)
+        atts = plot.predict(pad_seq)[0]
+        plot_att(text, atts[-len(text):])
     return ', '.join(formats)
 
 
