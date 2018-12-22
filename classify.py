@@ -79,7 +79,7 @@ def plot_att(text, atts):
     inds = np.arange(len(text))
     plt.bar(inds, atts, width=0.5)
     plt.xlabel('word')
-    plt.ylabel('prob')
+    plt.ylabel('att')
     plt.xticks(inds, text)
     plt.show()
 
