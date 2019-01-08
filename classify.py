@@ -37,8 +37,8 @@ def load_plot(name, embed_mat, seq_len):
 
 def ind2label(label_inds):
     ind_labels = dict()
-    for word, ind in label_inds.items():
-        ind_labels[ind] = word
+    for label, ind in label_inds.items():
+        ind_labels[ind] = label
     return ind_labels
 
 
