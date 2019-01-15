@@ -1,6 +1,6 @@
 from keras.layers import Dense, SeparableConv1D, LSTM, Activation
-from keras.layers import Dropout, TimeDistributed, GlobalMaxPooling1D, Bidirectional
-from keras.layers import Lambda, Flatten, RepeatVector, Permute, Concatenate, Multiply
+from keras.layers import Dropout, GlobalMaxPooling1D, Bidirectional, Lambda
+from keras.layers import Flatten, RepeatVector, Permute, Concatenate, Multiply
 
 import keras.backend as K
 
@@ -10,12 +10,11 @@ embed_len = 200
 
 def attend(x, embed_len):
     da = Dense(200, activation='tanh', name='attend1')
-    dn = Dense(1, activation=None, name='attend2')
-    tn = TimeDistributed(dn)
+    dn = Dense(1, name='attend2')
     softmax = Activation('softmax')
     sum = Lambda(lambda a: K.sum(a, axis=1))
     p = da(x)
-    p = tn(p)
+    p = dn(p)
     p = Flatten()(p)
     p = softmax(p)
     p = RepeatVector(embed_len)(p)
@@ -37,11 +36,10 @@ def adnn(embed_input, class_num):
 
 def adnn_plot(x):
     da = Dense(200, activation='tanh', name='attend1')
-    dn = Dense(1, activation=None, name='attend2')
-    tn = TimeDistributed(dn)
+    dn = Dense(1, name='attend2')
     softmax = Activation('softmax')
     p = da(x)
-    p = tn(p)
+    p = dn(p)
     p = Flatten()(p)
     return softmax(p)
 
