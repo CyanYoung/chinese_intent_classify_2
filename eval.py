@@ -2,11 +2,9 @@ import pickle as pk
 
 import numpy as np
 
-from keras.models import load_model
-
 from sklearn.metrics import accuracy_score
 
-from classify import ind2label
+from classify import ind_labels, models
 
 from util import flat_read, map_item
 
@@ -14,24 +12,11 @@ from util import flat_read, map_item
 path_test = 'data/test.csv'
 path_sent = 'feat/sent_test.pkl'
 path_label = 'feat/label_test.pkl'
-path_label_ind = 'feat/label_ind.pkl'
 texts = flat_read(path_test, 'text')
 with open(path_sent, 'rb') as f:
     sents = pk.load(f)
 with open(path_label, 'rb') as f:
     labels = pk.load(f)
-with open(path_label_ind, 'rb') as f:
-    label_inds = pk.load(f)
-
-ind_labels = ind2label(label_inds)
-
-paths = {'adnn': 'model/adnn.h5',
-         'crnn': 'model/crnn.h5',
-         'rcnn': 'model/rcnn.h5'}
-
-models = {'adnn': load_model(map_item('adnn', paths)),
-          'crnn': load_model(map_item('crnn', paths)),
-          'rcnn': load_model(map_item('rcnn', paths))}
 
 
 def test(name, sents, labels):
