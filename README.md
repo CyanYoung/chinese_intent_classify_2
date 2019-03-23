@@ -24,4 +24,4 @@ train 80% / dev 20% 划分，通过 adnn、crnn、rcnn 构建分类模型
 
 #### 5.classify
 
-predict() 去除停用词，统一替换地区、时间等特殊词，attend() 可视化
+predict() 输入单句、清洗后进行预测，输出所有类别的概率，attend() 可视化
