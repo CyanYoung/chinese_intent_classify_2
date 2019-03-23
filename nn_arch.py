@@ -30,7 +30,7 @@ def adnn(embed_input, class_num):
     x = attend(embed_input, embed_len)
     x = da1(x)
     x = da2(x)
-    x = Dropout(0.5)(x)
+    x = Dropout(0.2)(x)
     return da3(x)
 
 
@@ -55,7 +55,7 @@ def crnn(embed_input, class_num):
     x3 = ca3(embed_input)
     x = Concatenate()([x1, x2, x3])
     x = ra(x)
-    x = Dropout(0.5)(x)
+    x = Dropout(0.2)(x)
     return da(x)
 
 
@@ -77,5 +77,5 @@ def rcnn(embed_input, class_num):
     x3 = mp(x3)
     x = Concatenate()([x1, x2, x3])
     x = da1(x)
-    x = Dropout(0.5)(x)
+    x = Dropout(0.2)(x)
     return da2(x)
