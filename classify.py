@@ -76,6 +76,7 @@ def plot_att(text, atts):
 
 
 def predict(text, name):
+    text = clean(text)
     seq = word2ind.texts_to_sequences([text])[0]
     pad_seq = pad_sequences([seq], maxlen=seq_len)
     model = map_item(name, models)
@@ -96,7 +97,6 @@ def predict(text, name):
 if __name__ == '__main__':
     while True:
         text = input('text: ')
-        text = clean(text)
         print('adnn: %s' % predict(text, 'adnn'))
         print('crnn: %s' % predict(text, 'crnn'))
         print('rcnn: %s' % predict(text, 'rcnn'))
