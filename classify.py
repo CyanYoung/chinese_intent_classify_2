@@ -1,7 +1,5 @@
 import pickle as pk
 
-import re
-
 import numpy as np
 
 import matplotlib.pyplot as plt
@@ -11,9 +9,11 @@ from keras.layers import Input, Embedding
 
 from keras.preprocessing.sequence import pad_sequences
 
+from preprocess import clean
+
 from nn_arch import adnn_core
 
-from util import load_word_re, load_type_re, load_pair, word_replace, map_item
+from util import map_item
 
 
 plt.rcParams['axes.unicode_minus'] = False
@@ -43,15 +43,6 @@ def ind2label(label_inds):
 
 
 seq_len = 30
-
-path_stop_word = 'dict/stop_word.txt'
-path_type_dir = 'dict/word_type'
-path_homo = 'dict/homo.csv'
-path_syno = 'dict/syno.csv'
-stop_word_re = load_word_re(path_stop_word)
-word_type_re = load_type_re(path_type_dir)
-homo_dict = load_pair(path_homo)
-syno_dict = load_pair(path_syno)
 
 path_word2ind = 'model/word2ind.pkl'
 path_embed = 'feat/embed.pkl'
@@ -85,11 +76,6 @@ def plot_att(text, atts):
 
 
 def predict(text, name):
-    text = re.sub(stop_word_re, '', text.strip())
-    for word_type, word_re in word_type_re.items():
-        text = re.sub(word_re, word_type, text)
-    text = word_replace(text, homo_dict)
-    text = word_replace(text, syno_dict)
     seq = word2ind.texts_to_sequences([text])[0]
     pad_seq = pad_sequences([seq], maxlen=seq_len)
     model = map_item(name, models)
@@ -110,6 +96,7 @@ def predict(text, name):
 if __name__ == '__main__':
     while True:
         text = input('text: ')
+        text = clean(text)
         print('adnn: %s' % predict(text, 'adnn'))
         print('crnn: %s' % predict(text, 'crnn'))
         print('rcnn: %s' % predict(text, 'rcnn'))
