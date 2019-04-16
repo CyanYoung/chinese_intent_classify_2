@@ -46,7 +46,7 @@ def label2ind(labels, path_label_ind):
         pk.dump(label_inds, f)
 
 
-def align(sents, labels, path_sent, path_label, mode):
+def align(sents, labels, path_sent, path_label):
     with open(path_word2ind, 'rb') as f:
         model = pk.load(f)
     seqs = model.texts_to_sequences(sents)
@@ -69,7 +69,7 @@ def vectorize(path_data, path_sent, path_label, mode):
     if mode == 'train':
         embed(sents, path_word2ind, path_word_vec, path_embed)
         label2ind(labels, path_label_ind)
-    align(sents, labels, path_sent, path_label, mode)
+    align(sents, labels, path_sent, path_label)
 
 
 if __name__ == '__main__':
