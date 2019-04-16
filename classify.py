@@ -11,7 +11,7 @@ from keras.layers import Input, Embedding
 
 from keras.preprocessing.sequence import pad_sequences
 
-from nn_arch import adnn_plot
+from nn_arch import adnn_core
 
 from util import load_word_re, load_type_re, load_pair, word_replace, map_item
 
@@ -20,17 +20,17 @@ plt.rcParams['axes.unicode_minus'] = False
 plt.rcParams['font.family'] = ['Arial Unicode MS']
 
 
-def define_plot(embed_mat, seq_len):
+def define_core(embed_mat, seq_len):
     vocab_num, embed_len = embed_mat.shape
     embed = Embedding(input_dim=vocab_num, output_dim=embed_len, input_length=seq_len, name='embed')
     input = Input(shape=(seq_len,))
     embed_input = embed(input)
-    output = adnn_plot(embed_input)
+    output = adnn_core(embed_input)
     return Model(input, output)
 
 
-def load_plot(name, embed_mat, seq_len):
-    model = define_plot(embed_mat, seq_len)
+def load_core(name, embed_mat, seq_len):
+    model = define_core(embed_mat, seq_len)
     model.load_weights(map_item(name, paths), by_name=True)
     return model
 
@@ -70,7 +70,7 @@ paths = {'adnn': 'model/adnn.h5',
          'rcnn': 'model/rcnn.h5'}
 
 models = {'adnn': load_model(map_item('adnn', paths)),
-          'adnn_plot': load_plot('adnn', embed_mat, seq_len),
+          'adnn_core': load_core('adnn', embed_mat, seq_len),
           'crnn': load_model(map_item('crnn', paths)),
           'rcnn': load_model(map_item('rcnn', paths))}
 
@@ -101,8 +101,8 @@ def predict(text, name):
     for pred, prob in zip(sort_preds, sort_probs):
         formats.append('{} {:.3f}'.format(pred, prob))
     if name == 'adnn':
-        plot = map_item(name + '_plot', models)
-        atts = plot.predict(pad_seq)[0]
+        core = map_item(name + '_core', models)
+        atts = core.predict(pad_seq)[0]
         plot_att(text, atts[-len(text):])
     return ', '.join(formats)
 

@@ -34,7 +34,7 @@ def adnn(embed_input, class_num):
     return da3(x)
 
 
-def adnn_plot(x):
+def adnn_core(x):
     da = Dense(200, activation='tanh', name='attend1')
     dn = Dense(1, name='attend2')
     softmax = Activation('softmax')
