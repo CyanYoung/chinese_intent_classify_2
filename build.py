@@ -51,7 +51,7 @@ def compile(name, embed_mat, seq_len, class_num):
     model = Model(input, output)
     model.summary()
     plot_model(model, map_item(name + '_plot', paths), show_shapes=True)
-    model.compile(loss='categorical_crossentropy', optimizer=Adam(lr=0.001), metrics=['accuracy'])
+    model.compile(loss='sparse_categorical_crossentropy', optimizer=Adam(lr=0.001), metrics=['accuracy'])
     return model
 
 

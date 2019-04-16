@@ -4,7 +4,6 @@ import numpy as np
 
 from keras.preprocessing.text import Tokenizer
 from keras.preprocessing.sequence import pad_sequences
-from keras.utils import to_categorical
 
 from util import flat_read
 
@@ -54,12 +53,10 @@ def align(sents, labels, path_sent, path_label, mode):
     pad_seqs = pad_sequences(seqs, maxlen=seq_len)
     with open(path_label_ind, 'rb') as f:
         label_inds = pk.load(f)
-    class_num = len(label_inds)
     inds = list()
     for label in labels:
         inds.append(label_inds[label])
-    if mode == 'train':
-        inds = to_categorical(inds, num_classes=class_num)
+    inds = np.array(inds)
     with open(path_sent, 'wb') as f:
         pk.dump(pad_seqs, f)
     with open(path_label, 'wb') as f:
