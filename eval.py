@@ -9,6 +9,8 @@ from classify import ind_labels, models
 from util import flat_read, map_item
 
 
+detail = False
+
 path_test = 'data/test.csv'
 path_sent = 'feat/sent_test.pkl'
 path_label = 'feat/label_test.pkl'
@@ -25,7 +27,7 @@ paths = {'adnn': 'metric/adnn.csv',
          'rcnn': 'metric/rcnn.csv'}
 
 
-def test(name, sents, labels, detail):
+def test(name, sents, labels):
     model = map_item(name, models)
     probs = model.predict(sents)
     preds = np.argmax(probs, axis=1)
@@ -44,6 +46,6 @@ def test(name, sents, labels, detail):
 
 
 if __name__ == '__main__':
-    test('adnn', sents, labels, detail=False)
-    test('crnn', sents, labels, detail=False)
-    test('rcnn', sents, labels, detail=False)
+    test('adnn', sents, labels)
+    test('crnn', sents, labels)
+    test('rcnn', sents, labels)
