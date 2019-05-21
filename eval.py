@@ -36,10 +36,7 @@ def test(name, sents, labels):
         for i in range(class_num):
             f.write('%s,%.2f,%.2f\n' % (ind_labels[i], precs[i], recs[i]))
     f1 = f1_score(labels, preds, average='weighted')
-    print('\n%s f1: %.2f - acc: %.2f\n' % (name, f1, accuracy_score(labels, preds)))
-    for text, label, pred in zip(texts, labels, preds):
-        if label != pred:
-            print('{}: {} -> {}'.format(text, ind_labels[label], ind_labels[pred]))
+    print('\n%s f1: %.2f - acc: %.2f' % (name, f1, accuracy_score(labels, preds)))
 
 
 if __name__ == '__main__':
