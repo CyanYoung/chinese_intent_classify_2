@@ -25,7 +25,7 @@ paths = {'adnn': 'metric/adnn.csv',
          'rcnn': 'metric/rcnn.csv'}
 
 
-def test(name, sents, labels):
+def test(name, sents, labels, detail):
     model = map_item(name, models)
     probs = model.predict(sents)
     preds = np.argmax(probs, axis=1)
@@ -36,10 +36,14 @@ def test(name, sents, labels):
         for i in range(class_num):
             f.write('%s,%.2f,%.2f\n' % (ind_labels[i], precs[i], recs[i]))
     f1 = f1_score(labels, preds, average='weighted')
-    print('\n%s f1: %.2f - acc: %.2f' % (name, f1, accuracy_score(labels, preds)))
+    print('\n%s f1: %.2f - acc: %.2f\n' % (name, f1, accuracy_score(labels, preds)))
+    if detail:
+        for text, label, pred in zip(texts, labels, preds):
+            if label != pred:
+                print('{}: {} -> {}'.format(text, ind_labels[label], ind_labels[pred]))
 
 
 if __name__ == '__main__':
-    test('adnn', sents, labels)
-    test('crnn', sents, labels)
-    test('rcnn', sents, labels)
+    test('adnn', sents, labels, detail=False)
+    test('crnn', sents, labels, detail=False)
+    test('rcnn', sents, labels, detail=False)
