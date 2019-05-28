@@ -48,6 +48,8 @@ def sync_shuffle(texts, labels):
 def augment(texts, labels):
     aug_texts, aug_labels = list(), list()
     for text, label in zip(texts, labels):
+        aug_texts.append(text)
+        aug_labels.append(label)
         bound = len(text) - 1
         if bound > 0:
             for func in funcs:
